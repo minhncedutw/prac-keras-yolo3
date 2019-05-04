@@ -2,3 +2,9 @@
 *.jpeg
 *.weights
 *.h5
+
+.idea/
+*.pkl
+__pycache__/
+*/__pycache__/
+logs/
