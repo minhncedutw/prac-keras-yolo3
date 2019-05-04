@@ -1,4 +1,4 @@
-# YOLO3 (Detection, Training, and Evaluation)
+# Practice YOLO3 (Detection, Training, and Evaluation)
 
 > This project is based on: https://github.com/experiencor/keras-yolo3
 
