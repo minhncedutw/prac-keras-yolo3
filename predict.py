@@ -24,7 +24,7 @@ def _main_(args):
     #   Set some parameter
     ###############################       
     net_h, net_w = 416, 416 # a multiple of 32, the smaller the faster
-    obj_thresh, nms_thresh = 0.5, 0.45
+    obj_thresh, nms_thresh = 0.60, 0.3
 
     ###############################
     #   Load the model
@@ -106,10 +106,10 @@ def _main_(args):
         else:
             image_paths += [input_path]
 
-        image_paths = [inp_file for inp_file in image_paths if (inp_file[-4:] in ['.jpg', '.png', 'JPEG'])]
+        image_paths = [inp_file for inp_file in image_paths if (inp_file[-4:] in ['.jpg', '.png', 'jpeg'])]
 
         # the main loop
-        for image_path in image_paths:
+        for image_path in sorted(image_paths):
             image = cv2.imread(image_path)
             print(image_path)
 
@@ -120,13 +120,14 @@ def _main_(args):
             draw_boxes(image, boxes, config['model']['labels'], obj_thresh) 
      
             # write the image with bounding boxes to file
+            cv2.imshow("A", np.uint8(image)); cv2.waitKey(0)
             cv2.imwrite(output_path + image_path.split('/')[-1], np.uint8(image))         
 
 if __name__ == '__main__':
     argparser = argparse.ArgumentParser(description='Predict with a trained yolo model')
-    argparser.add_argument('-c', '--conf', help='path to configuration file')
-    argparser.add_argument('-i', '--input', help='path to an image, a directory of images, a video, or webcam')    
-    argparser.add_argument('-o', '--output', default='output/', help='path to output directory')   
+    argparser.add_argument('-c', '--conf', default='config.json', help='path to configuration file')
+    argparser.add_argument('-i', '--input', default='/home/minhnc-lab/WORKSPACES/AI/Samples/keras-yolo2/images/raccoon/', help='path to an image, a directory of images, a video, or webcam')
+    argparser.add_argument('-o', '--output', default='/home/minhnc-lab/WORKSPACES/AI/Samples/keras-yolo2/output/', help='path to output directory')
     
     args = argparser.parse_args()
     _main_(args)
